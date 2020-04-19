@@ -9,6 +9,7 @@
     "cleanBuild": "cd android & gradlew clean & cd .."
   },
   "dependencies": {
+    "@react-native-firebase/app": "^6.4.0",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },
