@@ -1,0 +1,23 @@
+{
+  "name": "MyCollection",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "cleanBuild": "cd android & gradlew clean & cd .."
+  },
+  "dependencies": {
+    "react": "16.11.0",
+    "react-native": "0.62.2"
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "0.0.5",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.19.0",
+    "prettier": "^1.19.1"
+  }
+}
