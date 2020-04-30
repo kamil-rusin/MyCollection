@@ -1,26 +1,28 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { returnProperImage } from '../_utils/checkImage';
 
 const SingleItem = props => {
-  const { item } = props;
-
-  //item: {download_url : string, author: string, publisher: string}
+  const { item, type } = props;
 
   return (
     <View style={styles.listItem}>
-      <Image style={styles.image} source={{ uri: item.download_url }} />
+      <Image
+        style={styles.image}
+        source={returnProperImage(item.download_url, type)}
+      />
       <View style={styles.detailsContainer}>
         <View style={styles.row}>
-          <Text style={styles.author}>{item.author}</Text>
+          <Text style={styles.title}>{item.title}</Text>
           <MaterialCommunityIcons
-            size={18}
+            size={32}
             name={'star'}
             color={'#ffd70a'}
             style={styles.starIcon}
           />
         </View>
-        <Text style={styles.website}>Url: {item.url}</Text>
+        <Text style={styles.publisher}>{item.publisher}</Text>
       </View>
     </View>
   );
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
   listItem: {
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#1d548b',
+    borderColor: '#80BDFF',
     flexDirection: 'row',
     marginBottom: 3,
     margin: 5
@@ -43,28 +45,28 @@ const styles = StyleSheet.create({
   row: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 2,
+    marginBottom: 0,
     marginRight: 10
   },
-  author: {
+  title: {
     fontSize: 18,
     fontWeight: 'bold'
   },
-  website: {
-    fontSize: 13,
+  publisher: {
+    fontSize: 14,
     color: '#606060'
   },
   starIcon: {
     marginLeft: 'auto',
     width: 38,
     height: 38,
-    marginBottom: 5
+    marginBottom: 0
   },
   image: {
     margin: 5,
     borderRadius: 10,
-    width: 80,
-    height: 80
+    width: 60,
+    height: 60
   }
 });
 

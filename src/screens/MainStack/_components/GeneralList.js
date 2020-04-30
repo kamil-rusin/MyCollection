@@ -6,7 +6,7 @@ import ItemsList from './ItemsList';
 const GeneralList = props => {
   return (
     <SafeAreaView style={styles.container}>
-      <ItemsList data={[]} />
+      <ItemsList data={props.data} type={props.type} />
     </SafeAreaView>
   );
 };

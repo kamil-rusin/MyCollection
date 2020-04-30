@@ -5,8 +5,9 @@ import EmptyListComponent from './EmptyListComponent';
 
 const ItemsList = props => {
   const {
+    data,
+    type
     // pending,
-    data
     // favouriteItems,
     // handleFavouriteItem,
     // onlyFavourites,
@@ -17,11 +18,13 @@ const ItemsList = props => {
     ({ item }) => (
       <SingleItem
         item={item}
+        type={type}
         // handleFavouriteItem={handleFavouriteItem}
         // isFavourite={favouriteItems.includes(item.id)}
       />
     ),
     [
+      type
       // handleFavouriteItem,
       // favouriteItems
     ]
