@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ItemsList from './ItemsList';
 
 const GeneralList = props => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>GeneralList {props.type}</Text>
+      <ItemsList data={[]} />
     </SafeAreaView>
   );
 };

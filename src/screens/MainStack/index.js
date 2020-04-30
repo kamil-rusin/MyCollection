@@ -25,7 +25,7 @@ const CollectionTabs = () => {
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIconsGlyphs
-              name="movie"
+              name="library-movie"
               color={color}
               size={26}
             />
@@ -37,7 +37,11 @@ const CollectionTabs = () => {
         component={BooksScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIconsGlyphs name="book" color={color} size={26} />
+            <MaterialCommunityIconsGlyphs
+              name="library-books"
+              color={color}
+              size={26}
+            />
           )
         }}
       />
