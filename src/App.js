@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,7 +11,7 @@ const store = configureStore();
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <Provider store={store}>
