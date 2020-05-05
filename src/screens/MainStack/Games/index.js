@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import database from '@react-native-firebase/database';
 import GeneralList from '../_components/GeneralList';
 import { GAME_TYPE } from '../_utils/constants';
 
 //item: {id: string, download_url : string, title: string, publisher: string}
-const games = [
+const gamesList = [
   {
     id: '123',
     download_url:
@@ -27,7 +28,16 @@ const games = [
 ];
 
 const GamesScreen = () => {
-  return <GeneralList type={GAME_TYPE} data={games} />;
+  const [games, setGames] = useState(null);
+
+  useEffect(() => {
+    database()
+      .ref(`/games/`)
+      .on('value', snapshot => {
+        console.log('User data: ', snapshot.val());
+      });
+  }, []);
+  return <GeneralList type={GAME_TYPE} data={gamesList} />;
 };
 
 export default GamesScreen;
