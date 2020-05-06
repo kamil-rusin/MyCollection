@@ -21,6 +21,7 @@ const GeneralList = props => {
             data={props.data}
             type={props.type}
             goToDetails={props.goToDetails}
+            deleteItem={props.deleteItem}
           />
           <FAB
             style={styles.fab}

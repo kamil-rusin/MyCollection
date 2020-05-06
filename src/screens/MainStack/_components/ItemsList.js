@@ -7,7 +7,8 @@ const ItemsList = props => {
   const {
     data,
     type,
-    goToDetails
+    goToDetails,
+    deleteItem
     // pending,
     // favouriteItems,
     // handleFavouriteItem,
@@ -21,16 +22,12 @@ const ItemsList = props => {
         item={item}
         type={type}
         onClicked={goToDetails}
+        onLongPress={deleteItem}
         // handleFavouriteItem={handleFavouriteItem}
         // isFavourite={favouriteItems.includes(item.id)}
       />
     ),
-    [
-      goToDetails,
-      type
-      // handleFavouriteItem,
-      // favouriteItems
-    ]
+    [deleteItem, goToDetails, type]
   );
 
   return (

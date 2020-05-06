@@ -4,10 +4,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { returnProperImage } from '../_utils/checkTypes';
 
 const SingleItem = props => {
-  const { item, type, onClicked } = props;
+  const { item, type, onClicked, onLongPress } = props;
 
   return (
-    <TouchableOpacity onPress={() => onClicked(item.key)}>
+    <TouchableOpacity
+      onPress={() => onClicked(item.key)}
+      onLongPress={() => onLongPress(item.key, item.title)}>
       <View style={styles.listItem}>
         <Image
           style={styles.image}
