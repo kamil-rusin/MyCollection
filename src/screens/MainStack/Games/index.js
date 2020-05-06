@@ -16,10 +16,7 @@ const GamesStack = () => {
         headerTintColor: 'white'
       }}>
       <GamesScreensStack.Screen name="Games" component={GamesScreen} />
-      <GamesScreensStack.Screen
-        name="GameDetails"
-        component={GameDetailsScreen}
-      />
+      <GamesScreensStack.Screen name="Details" component={GameDetailsScreen} />
     </GamesScreensStack.Navigator>
   );
 };

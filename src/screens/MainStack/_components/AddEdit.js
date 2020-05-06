@@ -11,7 +11,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { returnDetailsLabel, returnProperColor } from '../_utils/checkTypes';
 import { Button, TextInput } from 'react-native-paper';
-import { GAME_AVATAR } from '../_utils/constants';
 
 const AddEdit = props => {
   const {
@@ -19,12 +18,13 @@ const AddEdit = props => {
     title,
     details,
     isLoading,
+    imagePath,
     navigation,
     onSave,
     onTest,
     setDetails,
     setUrl,
-    setType,
+    setTitle,
     urlLoading,
     type
   } = props;
@@ -40,33 +40,36 @@ const AddEdit = props => {
     };
   }, [primaryColor]);
 
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: () => (
-  //       <TouchableOpacity
-  //         disabled={isLoading}
-  //         style={styles.saveButtonContainer}
-  //         onPress={() => console.warn('save clicked!')}>
-  //         <Text style={styles.saveButton}>SAVE</Text>
-  //       </TouchableOpacity>
-  //     )
-  //   });
-  // }, [navigation, isLoading]);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          disabled={isLoading}
+          style={styles.saveButtonContainer}
+          onPress={onSave}>
+          <Text style={styles.saveButton}>SAVE</Text>
+        </TouchableOpacity>
+      )
+    });
+  }, [navigation, isLoading, onSave]);
 
   return (
     <SafeAreaView style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size={'large'} color={primaryColor} />
+        <View style={styles.indicatorContainer}>
+          <ActivityIndicator size={'large'} color={primaryColor} />
+        </View>
       ) : (
         <ScrollView>
           <View style={styles.container}>
             <View
               style={[styles.imageContainer, { borderColor: primaryColor }]}>
-              <Image style={styles.image} source={GAME_AVATAR} />
+              <Image style={styles.image} source={imagePath} />
             </View>
             <TextInput
               theme={theme}
               style={styles.textInput}
+              onChangeText={setTitle}
               mode="outlined"
               value={title}
               label="Title"
@@ -74,6 +77,7 @@ const AddEdit = props => {
             <TextInput
               theme={theme}
               style={styles.textInput}
+              onChangeText={setDetails}
               mode="outlined"
               value={details}
               label={returnDetailsLabel(type)}
@@ -82,6 +86,7 @@ const AddEdit = props => {
               <TextInput
                 theme={theme}
                 style={styles.textInputRow}
+                onChangeText={setUrl}
                 mode="outlined"
                 value={url}
                 label="Image URL"
@@ -92,7 +97,7 @@ const AddEdit = props => {
                 color={primaryColor}
                 loading={urlLoading}
                 mode="contained"
-                onPress={() => console.warn('test clicked!')}>
+                onPress={() => onTest(url)}>
                 Test
               </Button>
             </View>
@@ -120,6 +125,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 105,
     height: 105
+  },
+  indicatorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   row: {
     margin: 15,

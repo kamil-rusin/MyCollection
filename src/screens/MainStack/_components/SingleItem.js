@@ -1,30 +1,32 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { returnProperImage } from '../_utils/checkTypes';
 
 const SingleItem = props => {
-  const { item, type } = props;
+  const { item, type, onClicked } = props;
 
   return (
-    <View style={styles.listItem}>
-      <Image
-        style={styles.image}
-        source={returnProperImage(item.download_url, type)}
-      />
-      <View style={styles.detailsContainer}>
-        <View style={styles.row}>
-          <Text style={styles.title}>{item.title}</Text>
-          <MaterialCommunityIcons
-            size={32}
-            name={'star'}
-            color={'#ffd70a'}
-            style={styles.starIcon}
-          />
+    <TouchableOpacity onPress={() => onClicked(item.key)}>
+      <View style={styles.listItem}>
+        <Image
+          style={styles.image}
+          source={returnProperImage(item.download_url, type)}
+        />
+        <View style={styles.detailsContainer}>
+          <View style={styles.row}>
+            <Text style={styles.title}>{item.title}</Text>
+            <MaterialCommunityIcons
+              size={32}
+              name={'star'}
+              color={'#ffd70a'}
+              style={styles.starIcon}
+            />
+          </View>
+          <Text style={styles.publisher}>{item.publisher}</Text>
         </View>
-        <Text style={styles.publisher}>{item.publisher}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -7,9 +7,12 @@ const GamesScreen = props => {
   const [games, setGames] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const goToDetails = useCallback(() => {
-    props.navigation.navigate('GameDetails');
-  }, [props.navigation]);
+  const goToDetails = useCallback(
+    key => {
+      props.navigation.navigate('Details', { key: key });
+    },
+    [props.navigation]
+  );
 
   useEffect(() => {
     const subscriber = database()

@@ -17,13 +17,17 @@ const GeneralList = props => {
         </View>
       ) : (
         <>
-          <ItemsList data={props.data} type={props.type} />
+          <ItemsList
+            data={props.data}
+            type={props.type}
+            goToDetails={props.goToDetails}
+          />
           <FAB
             style={styles.fab}
             small
             color={returnProperColor(props.type)}
             icon="plus"
-            onPress={props.goToDetails}
+            onPress={() => props.goToDetails(null)}
           />
         </>
       )}
