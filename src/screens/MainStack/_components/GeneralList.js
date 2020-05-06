@@ -6,14 +6,13 @@ import ItemsList from './ItemsList';
 import { returnProperColor } from '../_utils/checkTypes';
 
 const GeneralList = props => {
+  const primaryColor = returnProperColor(props.type);
+
   return (
     <SafeAreaView style={styles.container}>
       {props.isLoading ? (
         <View style={styles.indicatorContainer}>
-          <ActivityIndicator
-            size={'large'}
-            color={returnProperColor(props.type)}
-          />
+          <ActivityIndicator size={'large'} color={primaryColor} />
         </View>
       ) : (
         <>
@@ -24,9 +23,7 @@ const GeneralList = props => {
             deleteItem={props.deleteItem}
           />
           <FAB
-            style={styles.fab}
-            small
-            color={returnProperColor(props.type)}
+            style={[styles.fab, { backgroundColor: primaryColor }]}
             icon="plus"
             onPress={() => props.goToDetails(null)}
           />
@@ -49,7 +46,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0
+    bottom: 0,
+    backgroundColor: '#000'
   }
 });
 
