@@ -4,19 +4,21 @@ import MaterialCommunityIconsGlyphs from 'react-native-vector-icons/MaterialComm
 import GamesScreen from './Games';
 import MoviesScreen from './Movies';
 import BooksScreen from './Books';
+import { BOOK_COLOR, GAME_COLOR, MOVIE_COLOR } from './_utils/constants';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const CollectionTabs = () => {
   return (
-    <Tab.Navigator initialRouteName="Movies" labeled={false}>
+    <Tab.Navigator initialRouteName="Movies" labeled={false} shifting={true}>
       <Tab.Screen
         name="Games"
         component={GamesScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIconsGlyphs name="xbox" color={color} size={26} />
-          )
+          ),
+          tabBarColor: GAME_COLOR
         }}
       />
       <Tab.Screen
@@ -29,7 +31,8 @@ const CollectionTabs = () => {
               color={color}
               size={26}
             />
-          )
+          ),
+          tabBarColor: MOVIE_COLOR
         }}
       />
       <Tab.Screen
@@ -42,7 +45,8 @@ const CollectionTabs = () => {
               color={color}
               size={26}
             />
-          )
+          ),
+          tabBarColor: BOOK_COLOR
         }}
       />
     </Tab.Navigator>
