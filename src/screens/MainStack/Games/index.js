@@ -27,10 +27,6 @@ const GamesScreen = () => {
     return () => subscriber();
   }, []);
 
-  // useEffect(() => {
-  //   games === [] && setIsLoading(true);
-  // }, [games]);
-
   return <GeneralList type={GAME_TYPE} data={games} isLoading={isLoading} />;
 };
 
