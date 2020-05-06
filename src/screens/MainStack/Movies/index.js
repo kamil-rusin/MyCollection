@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import GeneralList from '../_components/GeneralList';
-import { MOVIE_TYPE } from '../_utils/constants';
-import database from '@react-native-firebase/database';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { MOVIE_COLOR } from '../_utils/constants';
+import MoviesScreen from './MoviesList';
 
-const MoviesScreen = () => {
-  const [movies, setMovies] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+const MoviesScreensStack = createStackNavigator();
 
-  useEffect(() => {
-    const subscriber = database()
-      .ref(`/movies`)
-      .on('value', snapshot => {
-        let tempMovies = [];
-
-        snapshot.forEach(childSnapshot => {
-          let item = childSnapshot.val();
-          item.key = childSnapshot.key;
-
-          tempMovies.push(item);
-        });
-
-        setMovies(tempMovies);
-        setIsLoading(false);
-        console.log('Movies data: ', tempMovies);
-      });
-    return () => subscriber();
-  }, []);
-
-  return <GeneralList type={MOVIE_TYPE} data={movies} isLoading={isLoading} />;
+const MoviesStack = () => {
+  return (
+    <MoviesScreensStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: MOVIE_COLOR
+        },
+        headerTintColor: 'white'
+      }}>
+      <MoviesScreensStack.Screen name="Movies" component={MoviesScreen} />
+    </MoviesScreensStack.Navigator>
+  );
 };
 
-export default MoviesScreen;
+export default MoviesStack;

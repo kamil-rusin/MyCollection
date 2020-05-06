@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import GeneralList from '../_components/GeneralList';
-import { BOOK_TYPE } from '../_utils/constants';
-import database from '@react-native-firebase/database';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { BOOK_COLOR } from '../_utils/constants';
+import BooksScreen from './BooksList';
 
-const BooksScreen = () => {
-  const [books, setBooks] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+const BooksScreensStack = createStackNavigator();
 
-  useEffect(() => {
-    const subscriber = database()
-      .ref(`/books`)
-      .on('value', snapshot => {
-        let tempBooks = [];
-
-        snapshot.forEach(childSnapshot => {
-          let item = childSnapshot.val();
-          item.key = childSnapshot.key;
-
-          tempBooks.push(item);
-        });
-
-        setBooks(tempBooks);
-        setIsLoading(false);
-        console.log('Books data: ', tempBooks);
-      });
-    return () => subscriber();
-  }, []);
-
-  return <GeneralList type={BOOK_TYPE} data={books} isLoading={isLoading} />;
+const BooksStack = () => {
+  return (
+    <BooksScreensStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: BOOK_COLOR
+        },
+        headerTintColor: 'white'
+      }}>
+      <BooksScreensStack.Screen name="Books" component={BooksScreen} />
+    </BooksScreensStack.Navigator>
+  );
 };
 
-export default BooksScreen;
+export default BooksStack;

@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import database from '@react-native-firebase/database';
-import GeneralList from '../_components/GeneralList';
-import { GAME_TYPE } from '../_utils/constants';
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { GAME_COLOR } from '../_utils/constants';
+import GamesScreen from './GamesList';
 
-const GamesScreen = () => {
-  const [games, setGames] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+const GamesScreensStack = createStackNavigator();
 
-  useEffect(() => {
-    const subscriber = database()
-      .ref(`/games`)
-      .on('value', snapshot => {
-        let tempGames = [];
-
-        snapshot.forEach(childSnapshot => {
-          let item = childSnapshot.val();
-          item.key = childSnapshot.key;
-
-          tempGames.push(item);
-        });
-
-        setGames(tempGames);
-        setIsLoading(false);
-        console.log('Games data v2: ', tempGames);
-      });
-    return () => subscriber();
-  }, []);
-
-  return <GeneralList type={GAME_TYPE} data={games} isLoading={isLoading} />;
+const GamesStack = () => {
+  return (
+    <GamesScreensStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: GAME_COLOR
+        },
+        headerTintColor: 'white'
+      }}>
+      <GamesScreensStack.Screen name="Games" component={GamesScreen} />
+    </GamesScreensStack.Navigator>
+  );
 };
 
-export default GamesScreen;
+export default GamesStack;
