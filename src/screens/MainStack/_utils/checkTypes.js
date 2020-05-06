@@ -36,3 +36,16 @@ export const returnProperColor = type => {
       return '#7B1FA2';
   }
 };
+
+export const returnDetailsLabel = type => {
+  switch (type) {
+    case BOOK_TYPE:
+      return 'Author';
+    case GAME_TYPE:
+      return 'Creator';
+    case MOVIE_TYPE:
+      return 'Director';
+    default:
+      return 'Details';
+  }
+};

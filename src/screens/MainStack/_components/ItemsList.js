@@ -6,7 +6,8 @@ import EmptyListComponent from './EmptyListComponent';
 const ItemsList = props => {
   const {
     data,
-    type
+    type,
+    goToDetails
     // pending,
     // favouriteItems,
     // handleFavouriteItem,
@@ -19,11 +20,13 @@ const ItemsList = props => {
       <SingleItem
         item={item}
         type={type}
+        onClicked={goToDetails}
         // handleFavouriteItem={handleFavouriteItem}
         // isFavourite={favouriteItems.includes(item.id)}
       />
     ),
     [
+      goToDetails,
       type
       // handleFavouriteItem,
       // favouriteItems

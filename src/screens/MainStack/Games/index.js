@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { GAME_COLOR } from '../_utils/constants';
 import GamesScreen from './GamesList';
+import GameDetailsScreen from './GameDetails';
 
 const GamesScreensStack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const GamesStack = () => {
         headerTintColor: 'white'
       }}>
       <GamesScreensStack.Screen name="Games" component={GamesScreen} />
+      <GamesScreensStack.Screen name="Details" component={GameDetailsScreen} />
     </GamesScreensStack.Navigator>
   );
 };
