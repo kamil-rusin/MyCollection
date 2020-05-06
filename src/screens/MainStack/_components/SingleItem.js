@@ -1,7 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { returnProperImage } from '../_utils/checkTypes';
+import { returnProperColor, returnProperImage } from '../_utils/checkTypes';
+import { Surface } from 'react-native-paper';
 
 const SingleItem = props => {
   const { item, type, onClicked, onLongPress } = props;
@@ -10,7 +11,8 @@ const SingleItem = props => {
     <TouchableOpacity
       onPress={() => onClicked(item.key)}
       onLongPress={() => onLongPress(item.key, item.title)}>
-      <View style={styles.listItem}>
+      <Surface
+        style={[styles.listItem, { borderColor: returnProperColor(type) }]}>
         <Image
           style={styles.image}
           source={returnProperImage(item.download_url, type)}
@@ -18,28 +20,28 @@ const SingleItem = props => {
         <View style={styles.detailsContainer}>
           <View style={styles.row}>
             <Text style={styles.title}>{item.title}</Text>
-            <MaterialCommunityIcons
-              size={32}
-              name={'star'}
-              color={'#ffd70a'}
-              style={styles.starIcon}
-            />
+            {/*<MaterialCommunityIcons*/}
+            {/*  size={32}*/}
+            {/*  name={'star'}*/}
+            {/*  color={'#ffd70a'}*/}
+            {/*  style={styles.starIcon}*/}
+            {/*/>*/}
           </View>
           <Text style={styles.publisher}>{item.publisher}</Text>
         </View>
-      </View>
+      </Surface>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   listItem: {
-    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#80BDFF',
     flexDirection: 'row',
     marginBottom: 3,
-    margin: 5
+    marginTop: 3,
+    margin: 5,
+    elevation: 5
   },
   detailsContainer: {
     flex: 1,
@@ -68,7 +70,6 @@ const styles = StyleSheet.create({
   },
   image: {
     margin: 5,
-    borderRadius: 10,
     width: 60,
     height: 60
   }
