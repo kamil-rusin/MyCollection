@@ -5,13 +5,13 @@ import { GAME_TYPE } from '../_utils/constants';
 
 const GamesScreen = () => {
   const [games, setGames] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const subscriber = database()
       .ref(`/games`)
       .on('value', snapshot => {
         let tempGames = [];
-        console.log('Games data: ', snapshot.val());
 
         snapshot.forEach(childSnapshot => {
           let item = childSnapshot.val();
@@ -21,11 +21,17 @@ const GamesScreen = () => {
         });
 
         setGames(tempGames);
+        setIsLoading(false);
         console.log('Games data v2: ', tempGames);
       });
     return () => subscriber();
   }, []);
-  return <GeneralList type={GAME_TYPE} data={games} />;
+
+  // useEffect(() => {
+  //   games === [] && setIsLoading(true);
+  // }, [games]);
+
+  return <GeneralList type={GAME_TYPE} data={games} isLoading={isLoading} />;
 };
 
 export default GamesScreen;
