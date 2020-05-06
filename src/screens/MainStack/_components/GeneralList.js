@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import { FAB } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsList from './ItemsList';
 import { returnProperColor } from '../_utils/checkTypes';
@@ -15,7 +16,16 @@ const GeneralList = props => {
           />
         </View>
       ) : (
-        <ItemsList data={props.data} type={props.type} />
+        <>
+          <ItemsList data={props.data} type={props.type} />
+          <FAB
+            style={styles.fab}
+            small
+            color={returnProperColor(props.type)}
+            icon="plus"
+            onPress={props.goToDetails}
+          />
+        </>
       )}
     </SafeAreaView>
   );
@@ -29,6 +39,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0
   }
 });
 

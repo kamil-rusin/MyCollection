@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import database from '@react-native-firebase/database';
 import GeneralList from '../../_components/GeneralList';
 import { GAME_TYPE } from '../../_utils/constants';
 
-const GamesScreen = () => {
+const GamesScreen = props => {
   const [games, setGames] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const goToDetails = useCallback(() => {
+    props.navigation.navigate('GameDetails');
+  }, [props.navigation]);
 
   useEffect(() => {
     const subscriber = database()
@@ -27,7 +31,14 @@ const GamesScreen = () => {
     return () => subscriber();
   }, []);
 
-  return <GeneralList type={GAME_TYPE} data={games} isLoading={isLoading} />;
+  return (
+    <GeneralList
+      type={GAME_TYPE}
+      data={games}
+      isLoading={isLoading}
+      goToDetails={goToDetails}
+    />
+  );
 };
 
 export default GamesScreen;
