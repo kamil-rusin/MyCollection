@@ -1,9 +1,12 @@
 import {
   BOOK_AVATAR,
+  BOOK_COLOR,
   BOOK_TYPE,
   GAME_AVATAR,
+  GAME_COLOR,
   GAME_TYPE,
   MOVIE_AVATAR,
+  MOVIE_COLOR,
   MOVIE_TYPE
 } from './constants';
 
@@ -18,5 +21,18 @@ export const returnProperImage = (uri, type) => {
       return MOVIE_AVATAR;
     default:
       return '';
+  }
+};
+
+export const returnProperColor = type => {
+  switch (type) {
+    case BOOK_TYPE:
+      return BOOK_COLOR;
+    case GAME_TYPE:
+      return GAME_COLOR;
+    case MOVIE_TYPE:
+      return MOVIE_COLOR;
+    default:
+      return '#7B1FA2';
   }
 };

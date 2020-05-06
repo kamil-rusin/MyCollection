@@ -4,3 +4,6 @@ export const MOVIE_AVATAR = require('../../../assets/images/movie.png');
 export const BOOK_TYPE = 'BOOK';
 export const GAME_TYPE = 'GAME';
 export const MOVIE_TYPE = 'MOVIE';
+export const BOOK_COLOR = '#007AFF';
+export const GAME_COLOR = '#0E7A0D';
+export const MOVIE_COLOR = '#E53935';

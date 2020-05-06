@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { returnProperImage } from '../_utils/checkImage';
+import { returnProperImage } from '../_utils/checkTypes';
 
 const SingleItem = props => {
   const { item, type } = props;

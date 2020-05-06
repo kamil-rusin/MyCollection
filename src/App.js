@@ -18,10 +18,7 @@ const App: () => React$Node = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: {
-              backgroundColor: '#007AFF'
-            },
-            headerTintColor: 'white'
+            headerShown: false
           }}>
           {!isLoggedIn ? (
             <Stack.Screen name="MyCollection" component={CollectionTabs} />

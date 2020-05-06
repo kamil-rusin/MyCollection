@@ -1,27 +1,32 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIconsGlyphs from 'react-native-vector-icons/MaterialCommunityIcons';
-import GamesScreen from './Games';
-import MoviesScreen from './Movies';
-import BooksScreen from './Books';
+import GamesStack from './Games';
+import MoviesStack from './Movies';
+import BooksStack from './Books';
+import { BOOK_COLOR, GAME_COLOR, MOVIE_COLOR } from './_utils/constants';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const CollectionTabs = () => {
   return (
-    <Tab.Navigator initialRouteName="Movies" labeled={false}>
+    <Tab.Navigator
+      initialRouteName="MoviesStack"
+      labeled={false}
+      shifting={true}>
       <Tab.Screen
-        name="Games"
-        component={GamesScreen}
+        name="GamesStack"
+        component={GamesStack}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIconsGlyphs name="xbox" color={color} size={26} />
-          )
+          ),
+          tabBarColor: GAME_COLOR
         }}
       />
       <Tab.Screen
-        name="Movies"
-        component={MoviesScreen}
+        name="MoviesStack"
+        component={MoviesStack}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIconsGlyphs
@@ -29,12 +34,13 @@ const CollectionTabs = () => {
               color={color}
               size={26}
             />
-          )
+          ),
+          tabBarColor: MOVIE_COLOR
         }}
       />
       <Tab.Screen
-        name="Books"
-        component={BooksScreen}
+        name="BooksStack"
+        component={BooksStack}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIconsGlyphs
@@ -42,7 +48,8 @@ const CollectionTabs = () => {
               color={color}
               size={26}
             />
-          )
+          ),
+          tabBarColor: BOOK_COLOR
         }}
       />
     </Tab.Navigator>

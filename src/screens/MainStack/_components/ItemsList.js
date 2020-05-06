@@ -38,7 +38,7 @@ const ItemsList = props => {
         contentContainerStyle={styles.contentContainerStyle}
         renderItem={renderItem}
         keyExtractor={item => item.key}
-        ListEmptyComponent={<EmptyListComponent />}
+        ListEmptyComponent={<EmptyListComponent type={type} />}
       />
     </>
   );

@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIconsGlyphs from 'react-native-vector-icons/MaterialCommunityIcons';
+import { returnProperColor } from '../_utils/checkTypes';
 
-const EmptyListComponent = () => {
+const EmptyListComponent = props => {
+  const primaryColor = returnProperColor(props.type);
+
   return (
     <View style={styles.informationContainer}>
       <MaterialCommunityIconsGlyphs
         name="view-list"
-        color={'#80BDFF'}
+        color={primaryColor}
         size={80}
       />
-      <Text style={styles.message}>No items available</Text>
+      <Text style={[styles.message, { color: primaryColor }]}>
+        No items available
+      </Text>
     </View>
   );
 };
@@ -25,8 +30,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 18,
-    margin: 5,
-    color: '#80BDFF'
+    margin: 5
   }
 });
 
