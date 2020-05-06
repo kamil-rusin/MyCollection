@@ -27,7 +27,7 @@ const SingleItem = props => {
             {/*  style={styles.starIcon}*/}
             {/*/>*/}
           </View>
-          <Text style={styles.publisher}>{item.publisher}</Text>
+          <Text style={styles.details}>{item.publisher}</Text>
         </View>
       </Surface>
     </TouchableOpacity>
@@ -58,9 +58,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
-  publisher: {
-    fontSize: 14,
-    color: '#606060'
+  details: {
+    fontSize: 14
   },
   starIcon: {
     marginLeft: 'auto',

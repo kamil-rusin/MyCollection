@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { createStackNavigator } from '@react-navigation/stack';
 import configureStore from './redux/Store';
 import AuthorizationScreen from './screens/AuthStack';
@@ -16,16 +17,18 @@ const App: () => React$Node = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}>
-          {!isLoggedIn ? (
-            <Stack.Screen name="MyCollection" component={CollectionTabs} />
-          ) : (
-            <Stack.Screen name="Login" component={AuthorizationScreen} />
-          )}
-        </Stack.Navigator>
+        <PaperProvider>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}>
+            {!isLoggedIn ? (
+              <Stack.Screen name="MyCollection" component={CollectionTabs} />
+            ) : (
+              <Stack.Screen name="Login" component={AuthorizationScreen} />
+            )}
+          </Stack.Navigator>
+        </PaperProvider>
       </NavigationContainer>
     </Provider>
   );

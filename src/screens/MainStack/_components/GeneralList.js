@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
 import { FAB } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsList from './ItemsList';
 import { returnProperColor } from '../_utils/checkTypes';
+import HeaderMenu from './HeaderMenu';
 
 const GeneralList = props => {
   const primaryColor = returnProperColor(props.type);
+
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => <HeaderMenu />
+    });
+  }, [props.navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,8 +53,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0,
-    backgroundColor: '#000'
+    bottom: 0
   }
 });
 

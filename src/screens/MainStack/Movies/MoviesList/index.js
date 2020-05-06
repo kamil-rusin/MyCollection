@@ -65,6 +65,7 @@ const MoviesScreen = props => {
       isLoading={isLoading}
       goToDetails={goToDetails}
       deleteItem={deleteItem}
+      navigation={props.navigation}
     />
   );
 };
