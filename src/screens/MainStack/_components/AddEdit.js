@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { returnDetailsLabel, returnProperColor } from '../_utils/checkTypes';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, Surface } from 'react-native-paper';
 
 const AddEdit = props => {
   const {
@@ -62,10 +62,10 @@ const AddEdit = props => {
       ) : (
         <ScrollView>
           <View style={styles.container}>
-            <View
+            <Surface
               style={[styles.imageContainer, { borderColor: primaryColor }]}>
               <Image style={styles.image} source={imagePath} />
-            </View>
+            </Surface>
             <TextInput
               theme={theme}
               style={styles.textInput}
@@ -122,9 +122,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.1,
-    borderRadius: 5,
+    borderRadius: 1,
     width: 105,
-    height: 105
+    height: 105,
+    elevation: 15
   },
   indicatorContainer: {
     flex: 1,

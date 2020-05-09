@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import database from '@react-native-firebase/database';
+import { Alert } from 'react-native';
 import GeneralList from '../../_components/GeneralList';
 import { GAME_TYPE } from '../../_utils/constants';
 
@@ -13,6 +14,29 @@ const GamesScreen = props => {
     },
     [props.navigation]
   );
+
+  const deleteItem = useCallback((key, title) => {
+    if (!key) return;
+    Alert.alert(
+      'Game',
+      `Do you want to delete '${title}' permanently?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            database()
+              .ref(`/games/${key}`)
+              .remove();
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  }, []);
 
   useEffect(() => {
     const subscriber = database()
@@ -40,6 +64,8 @@ const GamesScreen = props => {
       data={games}
       isLoading={isLoading}
       goToDetails={goToDetails}
+      deleteItem={deleteItem}
+      navigation={props.navigation}
     />
   );
 };
