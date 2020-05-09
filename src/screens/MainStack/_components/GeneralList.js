@@ -25,6 +25,7 @@ const GeneralList = props => {
         <>
           <ItemsList
             data={props.data}
+            finishedItems={props.finishedItems}
             type={props.type}
             goToDetails={props.goToDetails}
             deleteItem={props.deleteItem}

@@ -32,7 +32,7 @@ const SingleItem = props => {
             <MaterialCommunityIcons
               size={32}
               name={isFinished ? 'check-box-outline' : 'checkbox-blank-outline'}
-              style={styles.starIcon}
+              style={styles.checkboxIcon}
             />
           </View>
           <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.details}>
@@ -73,10 +73,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     maxWidth: Dimensions.get('window').width - 130
   },
-  starIcon: {
-    marginLeft: 'auto',
-    width: 38,
-    height: 38
+  checkboxIcon: {
+    marginLeft: 'auto'
   },
   image: {
     margin: 5,

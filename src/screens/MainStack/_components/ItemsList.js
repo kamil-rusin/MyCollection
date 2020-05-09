@@ -6,14 +6,11 @@ import EmptyListComponent from './EmptyListComponent';
 const ItemsList = props => {
   const {
     data,
+    finishedItems,
     type,
     goToDetails,
     deleteItem
-    // pending,
-    // favouriteItems,
     // handleFavouriteItem,
-    // onlyFavourites,
-    // handleFavourites
   } = props;
 
   const renderItem = useCallback(
@@ -24,10 +21,10 @@ const ItemsList = props => {
         onClicked={goToDetails}
         onLongPress={deleteItem}
         // handleFavouriteItem={handleFavouriteItem}
-        isFinished={true}
+        isFinished={finishedItems && finishedItems.includes(item.key)}
       />
     ),
-    [deleteItem, goToDetails, type]
+    [deleteItem, finishedItems, goToDetails, type]
   );
 
   return (
