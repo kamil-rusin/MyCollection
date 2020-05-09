@@ -24,7 +24,7 @@ const ItemsList = props => {
         onClicked={goToDetails}
         onLongPress={deleteItem}
         // handleFavouriteItem={handleFavouriteItem}
-        // isFavourite={favouriteItems.includes(item.id)}
+        isFinished={true}
       />
     ),
     [deleteItem, goToDetails, type]
