@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { FAB, Searchbar } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsList from './ItemsList';
 import { returnProperColor } from '../_utils/checkTypes';
@@ -23,6 +23,13 @@ const GeneralList = props => {
         </View>
       ) : (
         <>
+          <Searchbar
+            placeholder={'Search title...'}
+            value={props.searchValue}
+            onChangeText={props.setSearchValue}
+            iconColor={'#000'}
+            style={[styles.searchBar, { borderColor: primaryColor }]}
+          />
           <ItemsList
             data={props.data}
             finishedItems={props.finishedItems}
@@ -56,6 +63,14 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0
+  },
+  searchBar: {
+    borderWidth: 1,
+    borderRadius: 0.1,
+    marginBottom: 3,
+    marginTop: 3,
+    margin: 5,
+    elevation: 5
   }
 });
 

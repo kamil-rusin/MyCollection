@@ -66,6 +66,7 @@ const MoviesScreen = props => {
       goToDetails={goToDetails}
       deleteItem={deleteItem}
       navigation={props.navigation}
+      searchValue={''}
     />
   );
 };

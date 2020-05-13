@@ -17,6 +17,7 @@ const GamesScreen = props => {
   const [finishedGames, setFinishedGames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [gamesStatus, setGamesStatus] = useState(ALL_ITEMS);
+  const [searchValue, setSearchValue] = useState('');
 
   const goToDetails = useCallback(
     key => {
@@ -116,12 +117,26 @@ const GamesScreen = props => {
 
   const data = useMemo(() => {
     if (gamesStatus === ONLY_FINISHED) {
-      return games.filter(game => finishedGames.includes(game.key));
+      let result = games.filter(game => finishedGames.includes(game.key));
+      searchValue &&
+        (result = result.filter(game =>
+          game.title.toLowerCase().includes(searchValue.toLowerCase())
+        ));
+      return result;
     } else if (gamesStatus === NOT_FINISHED) {
-      return games.filter(game => !finishedGames.includes(game.key));
+      let result = games.filter(game => !finishedGames.includes(game.key));
+      searchValue &&
+        (result = result.filter(game =>
+          game.title.toLowerCase().includes(searchValue.toLowerCase())
+        ));
+      return result;
     }
-    return games;
-  }, [finishedGames, games, gamesStatus]);
+    return searchValue
+      ? games.filter(game =>
+          game.title.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      : games;
+  }, [finishedGames, games, gamesStatus, searchValue]);
 
   return (
     <GeneralList
@@ -134,6 +149,8 @@ const GamesScreen = props => {
       deleteItem={deleteItem}
       navigation={props.navigation}
       setItemsStatus={setGamesStatus}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
     />
   );
 };
