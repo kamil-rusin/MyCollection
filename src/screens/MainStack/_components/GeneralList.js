@@ -1,38 +1,60 @@
 import React, { useLayoutEffect } from 'react';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { FAB, Searchbar } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsList from './ItemsList';
 import { returnProperColor } from '../_utils/checkTypes';
 import HeaderMenu from './HeaderMenu';
 
 const GeneralList = props => {
+  const {
+    type,
+    setItemsStatus,
+    navigation,
+    isLoading,
+    searchValue,
+    setSearchValue,
+    finishedItems,
+    data,
+    goToDetails,
+    handleItemStatus,
+    deleteItem
+  } = props;
   const primaryColor = returnProperColor(props.type);
 
   useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => <HeaderMenu />
+    navigation.setOptions({
+      headerRight: () => <HeaderMenu setItemsStatus={setItemsStatus} />
     });
-  }, [props.navigation]);
+  }, [setItemsStatus, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {props.isLoading ? (
+      {isLoading ? (
         <View style={styles.indicatorContainer}>
           <ActivityIndicator size={'large'} color={primaryColor} />
         </View>
       ) : (
         <>
+          <Searchbar
+            placeholder={'Search title...'}
+            value={searchValue}
+            onChangeText={setSearchValue}
+            iconColor={'#000'}
+            style={[styles.searchBar, { borderColor: primaryColor }]}
+          />
           <ItemsList
-            data={props.data}
-            type={props.type}
-            goToDetails={props.goToDetails}
-            deleteItem={props.deleteItem}
+            data={data}
+            finishedItems={finishedItems}
+            type={type}
+            goToDetails={goToDetails}
+            handleItemStatus={handleItemStatus}
+            deleteItem={deleteItem}
           />
           <FAB
             style={[styles.fab, { backgroundColor: primaryColor }]}
             icon="plus"
-            onPress={() => props.goToDetails(null)}
+            onPress={() => goToDetails(null)}
           />
         </>
       )}
@@ -54,6 +76,14 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0
+  },
+  searchBar: {
+    borderWidth: 1,
+    borderRadius: 0.1,
+    marginBottom: 3,
+    marginTop: 3,
+    margin: 5,
+    elevation: 5
   }
 });
 

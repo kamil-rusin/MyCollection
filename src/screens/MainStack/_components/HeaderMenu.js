@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Divider, IconButton, Menu } from 'react-native-paper';
+import { ALL_ITEMS, NOT_FINISHED, ONLY_FINISHED } from '../_utils/constants';
 
 const HeaderMenu = props => {
   const [visible, setVisible] = useState(true);
+  const { setItemsStatus } = props;
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -16,7 +18,24 @@ const HeaderMenu = props => {
         anchor={
           <IconButton icon="menu" color="white" size={30} onPress={openMenu} />
         }>
-        <Menu.Item onPress={() => {}} title="Show favourites" />
+        <Menu.Item
+          onPress={() => {
+            setItemsStatus(ONLY_FINISHED);
+          }}
+          title="Show only finished"
+        />
+        <Menu.Item
+          onPress={() => {
+            setItemsStatus(NOT_FINISHED);
+          }}
+          title="Show not finished"
+        />
+        <Menu.Item
+          onPress={() => {
+            setItemsStatus(ALL_ITEMS);
+          }}
+          title="Show all"
+        />
         <Divider />
         <Menu.Item onPress={() => {}} title="Sign out" />
       </Menu>

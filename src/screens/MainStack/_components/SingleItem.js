@@ -1,11 +1,25 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions
+} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { returnProperColor, returnProperImage } from '../_utils/checkTypes';
 import { Surface } from 'react-native-paper';
 
 const SingleItem = props => {
-  const { item, type, onClicked, onLongPress } = props;
+  const {
+    isFinished,
+    item,
+    handleItemStatus,
+    type,
+    onClicked,
+    onLongPress
+  } = props;
 
   return (
     <TouchableOpacity
@@ -19,15 +33,23 @@ const SingleItem = props => {
         />
         <View style={styles.detailsContainer}>
           <View style={styles.row}>
-            <Text style={styles.title}>{item.title}</Text>
-            {/*<MaterialCommunityIcons*/}
-            {/*  size={32}*/}
-            {/*  name={'star'}*/}
-            {/*  color={'#ffd70a'}*/}
-            {/*  style={styles.starIcon}*/}
-            {/*/>*/}
+            <Text numberOfLines={2} ellipsizeMode={'tail'} style={styles.title}>
+              {item.title}
+            </Text>
+            <TouchableOpacity
+              onPress={() => handleItemStatus(isFinished, item.key)}
+              style={styles.checkboxIcon}>
+              <MaterialCommunityIcons
+                size={32}
+                name={
+                  isFinished ? 'check-box-outline' : 'checkbox-blank-outline'
+                }
+              />
+            </TouchableOpacity>
           </View>
-          <Text style={styles.details}>{item.publisher}</Text>
+          <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.details}>
+            {item.publisher}
+          </Text>
         </View>
       </Surface>
     </TouchableOpacity>
@@ -52,20 +74,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 0,
-    marginRight: 10
+    marginRight: 5
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    maxWidth: Dimensions.get('window').width - 130
   },
   details: {
-    fontSize: 14
+    fontSize: 14,
+    maxWidth: Dimensions.get('window').width - 130
   },
-  starIcon: {
-    marginLeft: 'auto',
-    width: 38,
-    height: 38,
-    marginBottom: 0
+  checkboxIcon: {
+    marginLeft: 'auto'
   },
   image: {
     margin: 5,
