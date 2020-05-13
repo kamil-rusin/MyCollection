@@ -28,6 +28,7 @@ const GeneralList = props => {
             finishedItems={props.finishedItems}
             type={props.type}
             goToDetails={props.goToDetails}
+            handleItemStatus={props.handleItemStatus}
             deleteItem={props.deleteItem}
           />
           <FAB

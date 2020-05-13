@@ -42,6 +42,35 @@ const GamesScreen = props => {
     );
   }, []);
 
+  const pushGameToFinished = useCallback(itemKey => {
+    try {
+      database()
+        .ref(`/favourites/${userId}/games`)
+        .update({ [itemKey]: itemKey });
+    } catch (err) {
+      console.warn('Error while removing from finished.');
+    }
+  }, []);
+
+  const removeGameFromFinished = useCallback(itemKey => {
+    try {
+      database()
+        .ref(`/favourites/${userId}/games/${itemKey}`)
+        .remove();
+    } catch (err) {
+      console.warn('Error while removing from finished.');
+    }
+  }, []);
+
+  const handleItemStatus = useCallback(
+    (isFinished, itemKey) => {
+      isFinished
+        ? removeGameFromFinished(itemKey)
+        : pushGameToFinished(itemKey);
+    },
+    [pushGameToFinished, removeGameFromFinished]
+  );
+
   useEffect(() => {
     const subscriber = database()
       .ref(`/games`)
@@ -86,6 +115,7 @@ const GamesScreen = props => {
       finishedItems={finishedGames}
       isLoading={isLoading}
       goToDetails={goToDetails}
+      handleItemStatus={handleItemStatus}
       deleteItem={deleteItem}
       navigation={props.navigation}
     />

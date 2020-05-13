@@ -12,7 +12,14 @@ import { returnProperColor, returnProperImage } from '../_utils/checkTypes';
 import { Surface } from 'react-native-paper';
 
 const SingleItem = props => {
-  const { isFinished, item, type, onClicked, onLongPress } = props;
+  const {
+    isFinished,
+    item,
+    handleItemStatus,
+    type,
+    onClicked,
+    onLongPress
+  } = props;
 
   return (
     <TouchableOpacity
@@ -29,11 +36,16 @@ const SingleItem = props => {
             <Text numberOfLines={2} ellipsizeMode={'tail'} style={styles.title}>
               {item.title}
             </Text>
-            <MaterialCommunityIcons
-              size={32}
-              name={isFinished ? 'check-box-outline' : 'checkbox-blank-outline'}
-              style={styles.checkboxIcon}
-            />
+            <TouchableOpacity
+              onPress={() => handleItemStatus(isFinished, item.key)}
+              style={styles.checkboxIcon}>
+              <MaterialCommunityIcons
+                size={32}
+                name={
+                  isFinished ? 'check-box-outline' : 'checkbox-blank-outline'
+                }
+              />
+            </TouchableOpacity>
           </View>
           <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.details}>
             {item.publisher}

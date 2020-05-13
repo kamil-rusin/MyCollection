@@ -9,8 +9,8 @@ const ItemsList = props => {
     finishedItems,
     type,
     goToDetails,
-    deleteItem
-    // handleFavouriteItem,
+    deleteItem,
+    handleItemStatus
   } = props;
 
   const renderItem = useCallback(
@@ -20,11 +20,11 @@ const ItemsList = props => {
         type={type}
         onClicked={goToDetails}
         onLongPress={deleteItem}
-        // handleFavouriteItem={handleFavouriteItem}
+        handleItemStatus={handleItemStatus}
         isFinished={finishedItems && finishedItems.includes(item.key)}
       />
     ),
-    [deleteItem, finishedItems, goToDetails, type]
+    [deleteItem, finishedItems, goToDetails, handleItemStatus, type]
   );
 
   return (
