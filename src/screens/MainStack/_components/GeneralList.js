@@ -11,9 +11,9 @@ const GeneralList = props => {
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
-      headerRight: () => <HeaderMenu />
+      headerRight: () => <HeaderMenu setItemsStatus={props.setItemsStatus} />
     });
-  }, [props.navigation]);
+  }, [props.setItemsStatus, props.navigation]);
 
   return (
     <SafeAreaView style={styles.container}>

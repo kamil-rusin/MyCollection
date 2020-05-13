@@ -1,8 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import database from '@react-native-firebase/database';
 import { Alert } from 'react-native';
 import GeneralList from '../../_components/GeneralList';
-import { GAME_TYPE } from '../../_utils/constants';
+import {
+  ALL_ITEMS,
+  GAME_TYPE,
+  NOT_FINISHED,
+  ONLY_FINISHED
+} from '../../_utils/constants';
 // import { FirebaseApp as firebase } from '@react-native-firebase/auth';
 
 const GamesScreen = props => {
@@ -11,6 +16,7 @@ const GamesScreen = props => {
   const [games, setGames] = useState(null);
   const [finishedGames, setFinishedGames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [gamesStatus, setGamesStatus] = useState(ALL_ITEMS);
 
   const goToDetails = useCallback(
     key => {
@@ -108,16 +114,26 @@ const GamesScreen = props => {
     return () => subscriber();
   }, []);
 
+  const data = useMemo(() => {
+    if (gamesStatus === ONLY_FINISHED) {
+      return games.filter(game => finishedGames.includes(game.key));
+    } else if (gamesStatus === NOT_FINISHED) {
+      return games.filter(game => !finishedGames.includes(game.key));
+    }
+    return games;
+  }, [finishedGames, games, gamesStatus]);
+
   return (
     <GeneralList
       type={GAME_TYPE}
-      data={games}
+      data={data}
       finishedItems={finishedGames}
       isLoading={isLoading}
       goToDetails={goToDetails}
       handleItemStatus={handleItemStatus}
       deleteItem={deleteItem}
       navigation={props.navigation}
+      setItemsStatus={setGamesStatus}
     />
   );
 };
