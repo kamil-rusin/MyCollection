@@ -7,17 +7,30 @@ import { returnProperColor } from '../_utils/checkTypes';
 import HeaderMenu from './HeaderMenu';
 
 const GeneralList = props => {
+  const {
+    type,
+    setItemsStatus,
+    navigation,
+    isLoading,
+    searchValue,
+    setSearchValue,
+    finishedItems,
+    data,
+    goToDetails,
+    handleItemStatus,
+    deleteItem
+  } = props;
   const primaryColor = returnProperColor(props.type);
 
   useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerRight: () => <HeaderMenu setItemsStatus={props.setItemsStatus} />
+    navigation.setOptions({
+      headerRight: () => <HeaderMenu setItemsStatus={setItemsStatus} />
     });
-  }, [props.setItemsStatus, props.navigation]);
+  }, [setItemsStatus, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {props.isLoading ? (
+      {isLoading ? (
         <View style={styles.indicatorContainer}>
           <ActivityIndicator size={'large'} color={primaryColor} />
         </View>
@@ -25,23 +38,23 @@ const GeneralList = props => {
         <>
           <Searchbar
             placeholder={'Search title...'}
-            value={props.searchValue}
-            onChangeText={props.setSearchValue}
+            value={searchValue}
+            onChangeText={setSearchValue}
             iconColor={'#000'}
             style={[styles.searchBar, { borderColor: primaryColor }]}
           />
           <ItemsList
-            data={props.data}
-            finishedItems={props.finishedItems}
-            type={props.type}
-            goToDetails={props.goToDetails}
-            handleItemStatus={props.handleItemStatus}
-            deleteItem={props.deleteItem}
+            data={data}
+            finishedItems={finishedItems}
+            type={type}
+            goToDetails={goToDetails}
+            handleItemStatus={handleItemStatus}
+            deleteItem={deleteItem}
           />
           <FAB
             style={[styles.fab, { backgroundColor: primaryColor }]}
             icon="plus"
-            onPress={() => props.goToDetails(null)}
+            onPress={() => goToDetails(null)}
           />
         </>
       )}
