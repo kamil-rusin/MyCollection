@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ActivityIndicator,
   Button,
+  Snackbar,
   TextInput,
   Title
 } from 'react-native-paper';
@@ -13,9 +14,12 @@ const Authorization = props => {
   const {
     email,
     isProcessing,
+    isSnackbarVisible,
+    onDismissSnackbar,
     password,
     setEmail,
     setPassword,
+    snackbarText,
     logInUser,
     signIn
   } = props;
@@ -73,6 +77,7 @@ const Authorization = props => {
           Sign in
         </Button>
       </View>
+
       {isProcessing ? (
         <ActivityIndicator
           style={styles.activityIndicator}
@@ -81,6 +86,14 @@ const Authorization = props => {
       ) : (
         <View style={styles.activityIndicatorPlaceHolder} />
       )}
+
+      <Snackbar
+        style={[styles.snackbar, { backgroundColor: primaryColor }]}
+        duration={3000}
+        visible={isSnackbarVisible}
+        onDismiss={onDismissSnackbar}>
+        {snackbarText}
+      </Snackbar>
     </SafeAreaView>
   );
 };
@@ -113,6 +126,9 @@ const styles = StyleSheet.create({
   },
   activityIndicatorPlaceHolder: {
     margin: 27
+  },
+  snackbar: {
+    margin: 15
   }
 });
 
