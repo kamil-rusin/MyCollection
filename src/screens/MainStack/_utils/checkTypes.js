@@ -8,7 +8,7 @@ import {
   MOVIE_AVATAR,
   MOVIE_COLOR,
   MOVIE_TYPE
-} from './constants';
+} from '../../_constants/types';
 
 export const returnProperImage = (uri, type) => {
   if (uri) return { uri: uri };

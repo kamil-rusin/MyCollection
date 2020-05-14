@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Divider, IconButton, Menu } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
-import { ALL_ITEMS, NOT_FINISHED, ONLY_FINISHED } from '../_utils/constants';
+import { ALL_ITEMS, NOT_FINISHED, ONLY_FINISHED } from '../../_constants/types';
 
 const HeaderMenu = props => {
   const [visible, setVisible] = useState(true);

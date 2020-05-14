@@ -7,7 +7,7 @@ import {
   GAME_TYPE,
   NOT_FINISHED,
   ONLY_FINISHED
-} from '../../_utils/constants';
+} from '../../../_constants/types';
 import auth from '@react-native-firebase/auth';
 
 const GamesScreen = props => {

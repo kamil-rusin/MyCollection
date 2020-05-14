@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import database from '@react-native-firebase/database';
 import AddEdit from '../../_components/AddEdit';
-import { MOVIE_TYPE } from '../../_utils/constants';
+import { MOVIE_TYPE } from '../../../_constants/types';
 import { returnProperImage } from '../../_utils/checkTypes';
 
 const MovieDetailsScreen = props => {

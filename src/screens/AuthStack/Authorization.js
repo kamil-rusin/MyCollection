@@ -8,7 +8,7 @@ import {
   TextInput,
   Title
 } from 'react-native-paper';
-import { MOVIE_COLOR } from '../MainStack/_utils/constants';
+import { MOVIE_COLOR } from '../_constants/types';
 
 const Authorization = props => {
   const {
@@ -46,6 +46,7 @@ const Authorization = props => {
         mode="outlined"
         value={email}
         label="Email"
+        keyboardType="email-address"
       />
       <TextInput
         secureTextEntry
@@ -64,7 +65,8 @@ const Authorization = props => {
           style={styles.testButton}
           color={primaryColor}
           mode="contained"
-          onPress={logInUser}>
+          onPress={logInUser}
+        >
           Login
         </Button>
         <Button

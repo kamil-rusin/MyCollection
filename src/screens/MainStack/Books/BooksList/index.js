@@ -8,7 +8,7 @@ import {
   BOOK_TYPE,
   NOT_FINISHED,
   ONLY_FINISHED
-} from '../../_utils/constants';
+} from '../../../_constants/types';
 
 const BooksScreen = props => {
   const userId = auth().currentUser.uid;
