@@ -8,11 +8,10 @@ import {
   NOT_FINISHED,
   ONLY_FINISHED
 } from '../../_utils/constants';
-// import { FirebaseApp as firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 const GamesScreen = props => {
-  // const userId = firebase.auth().currentUser.uid;
-  const userId = 'user123';
+  const userId = auth().currentUser.uid;
   const [games, setGames] = useState(null);
   const [finishedGames, setFinishedGames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,25 +48,31 @@ const GamesScreen = props => {
     );
   }, []);
 
-  const pushGameToFinished = useCallback(itemKey => {
-    try {
-      database()
-        .ref(`/favourites/${userId}/games`)
-        .update({ [itemKey]: itemKey });
-    } catch (err) {
-      console.warn('Error while removing from finished.');
-    }
-  }, []);
+  const pushGameToFinished = useCallback(
+    itemKey => {
+      try {
+        database()
+          .ref(`/favourites/${userId}/games`)
+          .update({ [itemKey]: itemKey });
+      } catch (err) {
+        console.warn('Error while pushing to finished.');
+      }
+    },
+    [userId]
+  );
 
-  const removeGameFromFinished = useCallback(itemKey => {
-    try {
-      database()
-        .ref(`/favourites/${userId}/games/${itemKey}`)
-        .remove();
-    } catch (err) {
-      console.warn('Error while removing from finished.');
-    }
-  }, []);
+  const removeGameFromFinished = useCallback(
+    itemKey => {
+      try {
+        database()
+          .ref(`/favourites/${userId}/games/${itemKey}`)
+          .remove();
+      } catch (err) {
+        console.warn('Error while removing from finished.');
+      }
+    },
+    [userId]
+  );
 
   const handleItemStatus = useCallback(
     (isFinished, itemKey) => {
@@ -82,18 +87,23 @@ const GamesScreen = props => {
     const subscriber = database()
       .ref(`/games`)
       .on('value', snapshot => {
-        let tempGames = [];
+        try {
+          let tempGames = [];
 
-        snapshot.forEach(childSnapshot => {
-          let item = childSnapshot.val();
-          item.key = childSnapshot.key;
+          snapshot.forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item.key = childSnapshot.key;
 
-          tempGames.push(item);
-        });
+            tempGames.push(item);
+          });
 
-        setGames(tempGames);
-        setIsLoading(false);
-        console.log('Games data v2: ', tempGames);
+          setGames(tempGames);
+          console.log('Games data v2: ', tempGames);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       });
     return () => subscriber();
   }, []);
@@ -102,18 +112,23 @@ const GamesScreen = props => {
     const subscriber = database()
       .ref(`/favourites/${userId}/games`)
       .on('value', snapshot => {
-        let tempFinishedGames = [];
+        try {
+          let tempFinishedGames = [];
 
-        snapshot.forEach(childSnapshot => {
-          tempFinishedGames.push(childSnapshot.key);
-        });
+          snapshot.forEach(childSnapshot => {
+            tempFinishedGames.push(childSnapshot.key);
+          });
 
-        setFinishedGames(tempFinishedGames);
-        setIsLoading(false);
-        console.log('Finished games data: ', tempFinishedGames);
+          setFinishedGames(tempFinishedGames);
+          console.log('Finished games data: ', tempFinishedGames);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       });
     return () => subscriber();
-  }, []);
+  }, [userId]);
 
   const data = useMemo(() => {
     if (gamesStatus === ONLY_FINISHED) {
