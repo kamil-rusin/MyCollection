@@ -24,7 +24,7 @@ const GameDetailsScreen = props => {
           .once('value')
           .then(snapshot => {
             setTitle(snapshot.val().title);
-            setDetails(snapshot.val().publisher);
+            setDetails(snapshot.val().details);
             setUrl(snapshot.val().download_url);
             checkImageURL(snapshot.val().download_url);
             setIsLoading(false);
@@ -62,7 +62,7 @@ const GameDetailsScreen = props => {
         newReference
           .set({
             title: title,
-            publisher: details,
+            details: details,
             download_url: url
           })
           .then(() => console.warn('Data updated.'));
@@ -82,7 +82,7 @@ const GameDetailsScreen = props => {
             .ref(`/games/${itemKey}`)
             .update({
               title: title,
-              publisher: details,
+              details: details,
               download_url: url
             })
             .then(() => console.warn('Data updated.'));

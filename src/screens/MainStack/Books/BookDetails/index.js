@@ -24,7 +24,7 @@ const BookDetailsScreen = props => {
           .once('value')
           .then(snapshot => {
             setTitle(snapshot.val().title);
-            setDetails(snapshot.val().author);
+            setDetails(snapshot.val().details);
             setUrl(snapshot.val().download_url);
             checkImageURL(snapshot.val().download_url);
             setIsLoading(false);
@@ -62,7 +62,7 @@ const BookDetailsScreen = props => {
         newReference
           .set({
             title: title,
-            author: details,
+            details: details,
             download_url: url
           })
           .then(() => console.warn('Data updated.'));
@@ -82,7 +82,7 @@ const BookDetailsScreen = props => {
             .ref(`/books/${itemKey}`)
             .update({
               title: title,
-              author: details,
+              details: details,
               download_url: url
             })
             .then(() => console.warn('Data updated.'));

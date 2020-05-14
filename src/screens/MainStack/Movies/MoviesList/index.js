@@ -84,7 +84,7 @@ const MoviesScreen = props => {
   );
 
   useEffect(() => {
-    const subscriber = database()
+    const subscriber2 = database()
       .ref(`/movies`)
       .on('value', snapshot => {
         try {
@@ -105,7 +105,7 @@ const MoviesScreen = props => {
           setIsLoading(false);
         }
       });
-    return () => subscriber();
+    return () => subscriber2();
   }, []);
 
   useEffect(() => {

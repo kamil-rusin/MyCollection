@@ -50,6 +50,7 @@ const GamesScreen = props => {
 
   const pushGameToFinished = useCallback(
     itemKey => {
+      console.log(itemKey);
       try {
         database()
           .ref(`/favourites/${userId}/games`)
@@ -98,7 +99,6 @@ const GamesScreen = props => {
           });
 
           setGames(tempGames);
-          console.log('Games data v2: ', tempGames);
         } catch (error) {
           console.log(error);
         } finally {
@@ -119,8 +119,8 @@ const GamesScreen = props => {
             tempFinishedGames.push(childSnapshot.key);
           });
 
+          console.log(tempFinishedGames);
           setFinishedGames(tempFinishedGames);
-          console.log('Finished games data: ', tempFinishedGames);
         } catch (error) {
           console.log(error);
         } finally {

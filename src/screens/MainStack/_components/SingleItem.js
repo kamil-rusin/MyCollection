@@ -48,7 +48,7 @@ const SingleItem = props => {
             </TouchableOpacity>
           </View>
           <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.details}>
-            {item.publisher}
+            {item.details}
           </Text>
         </View>
       </Surface>
