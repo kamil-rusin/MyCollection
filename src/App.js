@@ -27,7 +27,7 @@ const App: () => React$Node = () => {
             screenOptions={{
               headerShown: false
             }}>
-            {!isLoggedIn ? (
+            {isLoggedIn ? (
               <Stack.Screen name="MyCollection" component={CollectionTabs} />
             ) : (
               <Stack.Screen name="Login" component={AuthorizationScreen} />
