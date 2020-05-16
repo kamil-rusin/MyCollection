@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Text,
   Image,
-  ScrollView
+  ScrollView,
+  StatusBar
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { returnDetailsLabel, returnProperColor } from '../_utils/checkTypes';
@@ -55,6 +56,7 @@ const AddEdit = props => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor={primaryColor} />
       {isLoading ? (
         <View style={styles.indicatorContainer}>
           <ActivityIndicator size={'large'} color={primaryColor} />

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ActivityIndicator,
@@ -37,6 +37,7 @@ const Authorization = props => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor={primaryColor} />
       <Title style={styles.title}>MyCollection</Title>
       <TextInput
         theme={theme}
@@ -65,8 +66,7 @@ const Authorization = props => {
           style={styles.testButton}
           color={primaryColor}
           mode="contained"
-          onPress={logInUser}
-        >
+          onPress={logInUser}>
           Login
         </Button>
         <Button
