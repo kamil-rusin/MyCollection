@@ -4,7 +4,7 @@ import MaterialCommunityIconsGlyphs from 'react-native-vector-icons/MaterialComm
 import GamesStack from './Games';
 import MoviesStack from './Movies';
 import BooksStack from './Books';
-import { BOOK_COLOR, GAME_COLOR, MOVIE_COLOR } from './_utils/constants';
+import { BOOK_COLOR, GAME_COLOR, MOVIE_COLOR } from '../_constants/types';
 
 const Tab = createMaterialBottomTabNavigator();
 

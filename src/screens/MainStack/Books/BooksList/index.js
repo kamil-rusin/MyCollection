@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 import GeneralList from '../../_components/GeneralList';
 import {
   ALL_ITEMS,
   BOOK_TYPE,
   NOT_FINISHED,
   ONLY_FINISHED
-} from '../../_utils/constants';
-import database from '@react-native-firebase/database';
-import { Alert } from 'react-native';
+} from '../../../_constants/types';
 
 const BooksScreen = props => {
-  // const userId = firebase.auth().currentUser.uid;
-  const userId = 'user123';
+  const userId = auth().currentUser.uid;
   const [books, setBooks] = useState(null);
   const [finishedBooks, setFinishedBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,25 +48,31 @@ const BooksScreen = props => {
     );
   }, []);
 
-  const pushBookToFinished = useCallback(itemKey => {
-    try {
-      database()
-        .ref(`/favourites/${userId}/books`)
-        .update({ [itemKey]: itemKey });
-    } catch (err) {
-      console.warn('Error while removing from finished.');
-    }
-  }, []);
+  const pushBookToFinished = useCallback(
+    itemKey => {
+      try {
+        database()
+          .ref(`/favourites/${userId}/books`)
+          .update({ [itemKey]: itemKey });
+      } catch (err) {
+        console.warn('Error while pushing to finished.');
+      }
+    },
+    [userId]
+  );
 
-  const removeBookFromFinished = useCallback(itemKey => {
-    try {
-      database()
-        .ref(`/favourites/${userId}/books/${itemKey}`)
-        .remove();
-    } catch (err) {
-      console.warn('Error while removing from finished.');
-    }
-  }, []);
+  const removeBookFromFinished = useCallback(
+    itemKey => {
+      try {
+        database()
+          .ref(`/favourites/${userId}/books/${itemKey}`)
+          .remove();
+      } catch (err) {
+        console.warn('Error while removing from finished.');
+      }
+    },
+    [userId]
+  );
 
   const handleItemStatus = useCallback(
     (isFinished, itemKey) => {
@@ -81,18 +87,23 @@ const BooksScreen = props => {
     const subscriber = database()
       .ref(`/books`)
       .on('value', snapshot => {
-        let tempBooks = [];
+        try {
+          let tempBooks = [];
 
-        snapshot.forEach(childSnapshot => {
-          let item = childSnapshot.val();
-          item.key = childSnapshot.key;
+          snapshot.forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item.key = childSnapshot.key;
 
-          tempBooks.push(item);
-        });
+            tempBooks.push(item);
+          });
 
-        setBooks(tempBooks);
-        setIsLoading(false);
-        console.log('Books data: ', tempBooks);
+          setBooks(tempBooks);
+          console.log('Books data: ', tempBooks);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       });
     return () => subscriber();
   }, []);
@@ -101,18 +112,23 @@ const BooksScreen = props => {
     const subscriber = database()
       .ref(`/favourites/${userId}/books`)
       .on('value', snapshot => {
-        let tempFinishedBooks = [];
+        try {
+          let tempFinishedBooks = [];
 
-        snapshot.forEach(childSnapshot => {
-          tempFinishedBooks.push(childSnapshot.key);
-        });
+          snapshot.forEach(childSnapshot => {
+            tempFinishedBooks.push(childSnapshot.key);
+          });
 
-        setFinishedBooks(tempFinishedBooks);
-        setIsLoading(false);
-        console.log('Finished books data: ', tempFinishedBooks);
+          setFinishedBooks(tempFinishedBooks);
+          console.log('Finished books data: ', tempFinishedBooks);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       });
     return () => subscriber();
-  }, []);
+  }, [userId]);
 
   const data = useMemo(() => {
     if (booksStatus === ONLY_FINISHED) {

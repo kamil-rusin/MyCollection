@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Divider, IconButton, Menu } from 'react-native-paper';
-import { ALL_ITEMS, NOT_FINISHED, ONLY_FINISHED } from '../_utils/constants';
+import auth from '@react-native-firebase/auth';
+import { ALL_ITEMS, NOT_FINISHED, ONLY_FINISHED } from '../../_constants/types';
 
 const HeaderMenu = props => {
   const [visible, setVisible] = useState(true);
@@ -9,6 +10,12 @@ const HeaderMenu = props => {
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
+
+  const signOut = () => {
+    auth()
+      .signOut()
+      .then(() => console.warn('User signed out!'));
+  };
 
   return (
     <View style={styles.menuContainer}>
@@ -37,7 +44,7 @@ const HeaderMenu = props => {
           title="Show all"
         />
         <Divider />
-        <Menu.Item onPress={() => {}} title="Sign out" />
+        <Menu.Item onPress={signOut} title="Sign out" />
       </Menu>
     </View>
   );

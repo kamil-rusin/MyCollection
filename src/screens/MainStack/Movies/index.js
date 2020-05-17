@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MOVIE_COLOR } from '../_utils/constants';
+import { MOVIE_COLOR } from '../../_constants/types';
 import MoviesScreen from './MoviesList';
 import MovieDetailsScreen from './MovieDetails';
 

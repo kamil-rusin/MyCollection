@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
+import { Alert } from 'react-native';
 import GeneralList from '../../_components/GeneralList';
 import {
   ALL_ITEMS,
   MOVIE_TYPE,
   NOT_FINISHED,
   ONLY_FINISHED
-} from '../../_utils/constants';
-import database from '@react-native-firebase/database';
-import { Alert } from 'react-native';
+} from '../../../_constants/types';
 
 const MoviesScreen = props => {
-  // const userId = firebase.auth().currentUser.uid;
-  const userId = 'user123';
+  const userId = auth().currentUser.uid;
   const [movies, setMovies] = useState(null);
   const [finishedMovies, setFinishedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,25 +48,31 @@ const MoviesScreen = props => {
     );
   }, []);
 
-  const pushMovieToFinished = useCallback(itemKey => {
-    try {
-      database()
-        .ref(`/favourites/${userId}/movies`)
-        .update({ [itemKey]: itemKey });
-    } catch (err) {
-      console.warn('Error while removing from finished.');
-    }
-  }, []);
+  const pushMovieToFinished = useCallback(
+    itemKey => {
+      try {
+        database()
+          .ref(`/favourites/${userId}/movies`)
+          .update({ [itemKey]: itemKey });
+      } catch (err) {
+        console.warn('Error while pushing to finished.');
+      }
+    },
+    [userId]
+  );
 
-  const removeMovieFromFinished = useCallback(itemKey => {
-    try {
-      database()
-        .ref(`/favourites/${userId}/movies/${itemKey}`)
-        .remove();
-    } catch (err) {
-      console.warn('Error while removing from finished.');
-    }
-  }, []);
+  const removeMovieFromFinished = useCallback(
+    itemKey => {
+      try {
+        database()
+          .ref(`/favourites/${userId}/movies/${itemKey}`)
+          .remove();
+      } catch (err) {
+        console.warn('Error while removing from finished.');
+      }
+    },
+    [userId]
+  );
 
   const handleItemStatus = useCallback(
     (isFinished, itemKey) => {
@@ -78,41 +84,52 @@ const MoviesScreen = props => {
   );
 
   useEffect(() => {
-    const subscriber = database()
+    const subscriber2 = database()
       .ref(`/movies`)
       .on('value', snapshot => {
-        let tempMovies = [];
+        try {
+          let tempMovies = [];
 
-        snapshot.forEach(childSnapshot => {
-          let item = childSnapshot.val();
-          item.key = childSnapshot.key;
+          snapshot.forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item.key = childSnapshot.key;
 
-          tempMovies.push(item);
-        });
+            tempMovies.push(item);
+          });
 
-        setMovies(tempMovies);
-        setIsLoading(false);
-        console.log('Movies data: ', tempMovies);
+          setMovies(tempMovies);
+          console.log('Movies data: ', tempMovies);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       });
-    return () => subscriber();
+    return () => subscriber2();
   }, []);
 
   useEffect(() => {
     const subscriber = database()
       .ref(`/favourites/${userId}/movies`)
       .on('value', snapshot => {
-        let tempFinishedMovies = [];
+        try {
+          let tempFinishedMovies = [];
 
-        snapshot.forEach(childSnapshot => {
-          tempFinishedMovies.push(childSnapshot.key);
-        });
+          snapshot.forEach(childSnapshot => {
+            tempFinishedMovies.push(childSnapshot.key);
+          });
 
-        setFinishedMovies(tempFinishedMovies);
-        setIsLoading(false);
-        console.log('Finished movies data: ', tempFinishedMovies);
+          setFinishedMovies(tempFinishedMovies);
+
+          console.log('Finished movies data: ', tempFinishedMovies);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       });
     return () => subscriber();
-  }, []);
+  }, [userId]);
 
   const data = useMemo(() => {
     if (moviesStatus === ONLY_FINISHED) {

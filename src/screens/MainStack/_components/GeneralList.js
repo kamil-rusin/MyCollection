@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, ActivityIndicator, View, StatusBar } from 'react-native';
 import { FAB, Searchbar } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsList from './ItemsList';
@@ -30,6 +30,7 @@ const GeneralList = props => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor={primaryColor} />
       {isLoading ? (
         <View style={styles.indicatorContainer}>
           <ActivityIndicator size={'large'} color={primaryColor} />

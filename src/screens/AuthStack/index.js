@@ -1,81 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import auth from '@react-native-firebase/auth';
-import {
-  GoogleSignin,
-  statusCodes
-} from '@react-native-community/google-signin';
 import Authorization from './Authorization';
-import { webClientId, androidClientId } from '../../config/routes';
 
 const AuthorizationScreen = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isSigninInProgress, setIsSigninInProgress] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState(false);
 
-  // scopes: ['profile', 'email']
-  const signIn = async () => {
-    try {
-      setIsSigninInProgress(true);
-      GoogleSignin.configure({
-        webClientId: webClientId,
-        androidClientId: androidClientId,
-        offlineAccess: true
+  const showSnackbar = useCallback(text => {
+    setSnackbarText(text);
+    setIsSnackbarVisible(true);
+  }, []);
+
+  const onDismissSnackbar = useCallback(() => {
+    setIsSnackbarVisible(false);
+  }, []);
+
+  const createUser = useCallback(() => {
+    setIsProcessing(true);
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.warn('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          showSnackbar('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          showSnackbar('That email address is invalid!');
+        }
+
+        showSnackbar('Unrecognized error!');
       });
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true
+    setIsProcessing(false);
+  }, [email, password, showSnackbar]);
+
+  const logInUser = useCallback(() => {
+    setIsProcessing(true);
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.warn('User signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/wrong-password') {
+          showSnackbar('That password is wrong!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          showSnackbar('That email address is invalid!');
+        }
+
+        showSnackbar('Unrecognized error!');
       });
-      // Get the users ID token
-      const { idToken } = await GoogleSignin.signIn();
-      console.log('po signin' + idToken);
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      console.log('it worked' + idToken);
-      return auth().signInWithCredential(googleCredential);
-    } catch (error) {
-      console.warn(error.message);
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    } finally {
-      setIsSigninInProgress(false);
-    }
-  };
-
-  const getCurrentUserInfo = async () => {
-    try {
-      const userInfo = await GoogleSignin.signInSilently();
-      this.setState({ userInfo });
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        // user has not signed in yet
-        setLoggedIn(false);
-        await signIn();
-      } else {
-        // some other error
-        setLoggedIn(false);
-      }
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      setLoggedIn(false); // Remember to remove the user from your app's state as well
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    setIsProcessing(false);
+  }, [email, password, showSnackbar]);
 
   return (
-    <Authorization signIn={signIn} isSigninInProgress={isSigninInProgress} />
+    <Authorization
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      signIn={createUser}
+      logInUser={logInUser}
+      isProcessing={isProcessing}
+      isSnackbarVisible={isSnackbarVisible}
+      snackbarText={snackbarText}
+      onDismissSnackbar={onDismissSnackbar}
+    />
   );
 };
 

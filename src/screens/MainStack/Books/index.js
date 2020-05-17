@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { BOOK_COLOR } from '../_utils/constants';
+import { BOOK_COLOR } from '../../_constants/types';
 import BooksScreen from './BooksList';
 import BookDetailsScreen from './BookDetails';
 

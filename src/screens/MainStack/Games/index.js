@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { GAME_COLOR } from '../_utils/constants';
+import { GAME_COLOR } from '../../_constants/types';
 import GamesScreen from './GamesList';
 import GameDetailsScreen from './GameDetails';
 
