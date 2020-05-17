@@ -11,9 +11,20 @@ const GameDetailsScreen = props => {
   const [imagePath, setImagePath] = useState(returnProperImage('', GAME_TYPE));
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [snackbarText, setSnackbarText] = useState(false);
 
   const { navigation } = props;
   const { key } = props.route.params;
+
+  const showSnackbar = useCallback(text => {
+    setSnackbarText(text);
+    setIsSnackbarVisible(true);
+  }, []);
+
+  const onDismissSnackbar = useCallback(() => {
+    setIsSnackbarVisible(false);
+  }, []);
 
   useEffect(() => {
     try {
@@ -32,9 +43,9 @@ const GameDetailsScreen = props => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      showSnackbar('Error while loading the game!');
     }
-  }, [key]);
+  }, [key, showSnackbar]);
 
   const checkImageURL = testUrl => {
     setUrlLoading(true);
@@ -65,14 +76,17 @@ const GameDetailsScreen = props => {
             details: details,
             download_url: url
           })
-          .then(() => console.warn('Data updated.'));
+          .then(() => {
+            showSnackbar('Successfully added the game!');
+            setTimeout(navigation.goBack, 3000);
+          });
       }
     } catch (err) {
-      console.warn('Error while pushing.');
+      showSnackbar('Error while adding the game!');
     } finally {
       setUrlLoading(false);
     }
-  }, [details, title, url]);
+  }, [details, navigation, showSnackbar, title, url]);
 
   const updateInDb = useCallback(
     itemKey => {
@@ -85,15 +99,15 @@ const GameDetailsScreen = props => {
               details: details,
               download_url: url
             })
-            .then(() => console.warn('Data updated.'));
+            .then(() => showSnackbar('Game updated!'));
         }
       } catch (err) {
-        console.warn('Error while updating.');
+        showSnackbar('Error while updating the game!');
       } finally {
         setUrlLoading(false);
       }
     },
-    [details, title, url]
+    [details, showSnackbar, title, url]
   );
 
   const onSave = useCallback(() => {
@@ -109,10 +123,13 @@ const GameDetailsScreen = props => {
       setUrl={setUrl}
       setTitle={setTitle}
       setDetails={setDetails}
+      snackbarText={snackbarText}
       type={GAME_TYPE}
       isLoading={isLoading}
+      isSnackbarVisible={isSnackbarVisible}
       urlLoading={urlLoading}
       navigation={navigation}
+      onDismissSnackbar={onDismissSnackbar}
       onSave={onSave}
       onTest={checkImageURL}
     />

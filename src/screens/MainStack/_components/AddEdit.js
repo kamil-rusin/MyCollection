@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { returnDetailsLabel, returnProperColor } from '../_utils/checkTypes';
-import { Button, TextInput, Surface } from 'react-native-paper';
+import { Button, TextInput, Surface, Snackbar } from 'react-native-paper';
 
 const AddEdit = props => {
   const {
@@ -19,13 +19,16 @@ const AddEdit = props => {
     title,
     details,
     isLoading,
+    isSnackbarVisible,
     imagePath,
     navigation,
+    onDismissSnackbar,
     onSave,
     onTest,
     setDetails,
     setUrl,
     setTitle,
+    snackbarText,
     urlLoading,
     type
   } = props;
@@ -45,14 +48,14 @@ const AddEdit = props => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          disabled={isLoading}
+          disabled={isLoading || isSnackbarVisible}
           style={styles.saveButtonContainer}
           onPress={onSave}>
           <Text style={styles.saveButton}>SAVE</Text>
         </TouchableOpacity>
       )
     });
-  }, [navigation, isLoading, onSave]);
+  }, [navigation, isLoading, onSave, isSnackbarVisible]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,6 +109,13 @@ const AddEdit = props => {
           </View>
         </ScrollView>
       )}
+      <Snackbar
+        style={[styles.snackbar, { backgroundColor: primaryColor }]}
+        duration={3000}
+        visible={isSnackbarVisible}
+        onDismiss={onDismissSnackbar}>
+        {snackbarText}
+      </Snackbar>
     </SafeAreaView>
   );
 };
@@ -145,6 +155,10 @@ const styles = StyleSheet.create({
   },
   saveButtonContainer: {
     marginRight: 15
+  },
+  snackbar: {
+    bottom: 0,
+    position: 'absolute'
   },
   testButton: {
     marginTop: 5,
