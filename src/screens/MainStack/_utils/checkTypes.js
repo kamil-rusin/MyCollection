@@ -11,7 +11,8 @@ import {
 } from '../../_constants/types';
 
 export const returnProperImage = (uri, type) => {
-  if (uri) return { uri: uri };
+  if (uri.match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/))
+    return { uri: uri };
   switch (type) {
     case BOOK_TYPE:
       return BOOK_AVATAR;
