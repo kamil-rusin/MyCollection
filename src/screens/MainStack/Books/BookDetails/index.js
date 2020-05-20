@@ -80,6 +80,8 @@ const BookDetailsScreen = props => {
             showSnackbar('Successfully added the book!');
             setTimeout(navigation.goBack, 3000);
           });
+      } else {
+        showSnackbar('Inputs cannot be empty!');
       }
     } catch (err) {
       showSnackbar('Error while adding the book!');
@@ -100,6 +102,8 @@ const BookDetailsScreen = props => {
               download_url: url
             })
             .then(() => showSnackbar('Book updated!'));
+        } else {
+          showSnackbar('Inputs cannot be empty!');
         }
       } catch (err) {
         showSnackbar('Error while updating the book!');

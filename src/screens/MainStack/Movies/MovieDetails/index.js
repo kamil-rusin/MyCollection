@@ -80,6 +80,8 @@ const MovieDetailsScreen = props => {
             showSnackbar('Successfully added the movie!');
             setTimeout(navigation.goBack, 3000);
           });
+      } else {
+        showSnackbar('Inputs cannot be empty!');
       }
     } catch (err) {
       showSnackbar('Error while adding the movie!');
@@ -100,6 +102,8 @@ const MovieDetailsScreen = props => {
               download_url: url
             })
             .then(() => showSnackbar('Movie updated!'));
+        } else {
+          showSnackbar('Inputs cannot be empty!');
         }
       } catch (err) {
         showSnackbar('Error while updating the movie!');
