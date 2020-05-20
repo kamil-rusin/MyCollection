@@ -23,7 +23,7 @@ const AuthorizationScreen = () => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        console.warn('User account created & signed in!');
+        console.log('User account created & signed in!');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -44,7 +44,7 @@ const AuthorizationScreen = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.warn('User signed in!');
+        console.log('User signed in!');
       })
       .catch(error => {
         if (error.code === 'auth/wrong-password') {
