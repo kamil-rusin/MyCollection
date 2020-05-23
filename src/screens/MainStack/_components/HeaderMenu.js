@@ -14,7 +14,7 @@ const HeaderMenu = props => {
   const signOut = () => {
     auth()
       .signOut()
-      .then(() => console.warn('User signed out!'));
+      .then(() => console.log('User signed out!'));
   };
 
   return (

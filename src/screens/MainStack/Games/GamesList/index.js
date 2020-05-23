@@ -56,7 +56,7 @@ const GamesScreen = props => {
           .ref(`/favourites/${userId}/games`)
           .update({ [itemKey]: itemKey });
       } catch (err) {
-        console.warn('Error while pushing to finished.');
+        console.log('Error while pushing to finished.');
       }
     },
     [userId]
@@ -69,7 +69,7 @@ const GamesScreen = props => {
           .ref(`/favourites/${userId}/games/${itemKey}`)
           .remove();
       } catch (err) {
-        console.warn('Error while removing from finished.');
+        console.log('Error while removing from finished.');
       }
     },
     [userId]

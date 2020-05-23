@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsList from './ItemsList';
 import { returnProperColor } from '../_utils/checkTypes';
 import HeaderMenu from './HeaderMenu';
+import { useFocusEffect } from '@react-navigation/core';
 
 const GeneralList = props => {
   const {
@@ -27,6 +28,10 @@ const GeneralList = props => {
       headerRight: () => <HeaderMenu setItemsStatus={setItemsStatus} />
     });
   }, [setItemsStatus, navigation]);
+
+  useFocusEffect(() => {
+    StatusBar.setBackgroundColor(primaryColor, true);
+  });
 
   return (
     <SafeAreaView style={styles.container}>

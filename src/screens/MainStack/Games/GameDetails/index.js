@@ -80,6 +80,8 @@ const GameDetailsScreen = props => {
             showSnackbar('Successfully added the game!');
             setTimeout(navigation.goBack, 3000);
           });
+      } else {
+        showSnackbar('Inputs cannot be empty!');
       }
     } catch (err) {
       showSnackbar('Error while adding the game!');
@@ -100,6 +102,8 @@ const GameDetailsScreen = props => {
               download_url: url
             })
             .then(() => showSnackbar('Game updated!'));
+        } else {
+          showSnackbar('Inputs cannot be empty!');
         }
       } catch (err) {
         showSnackbar('Error while updating the game!');

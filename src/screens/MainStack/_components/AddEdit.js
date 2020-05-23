@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { returnDetailsLabel, returnProperColor } from '../_utils/checkTypes';
 import { Button, TextInput, Surface, Snackbar } from 'react-native-paper';
+import { useFocusEffect } from '@react-navigation/core';
 
 const AddEdit = props => {
   const {
@@ -56,6 +57,10 @@ const AddEdit = props => {
       )
     });
   }, [navigation, isLoading, onSave, isSnackbarVisible]);
+
+  useFocusEffect(() => {
+    StatusBar.setBackgroundColor(primaryColor, true);
+  });
 
   return (
     <SafeAreaView style={styles.container}>
